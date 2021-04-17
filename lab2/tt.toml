@@ -1,0 +1,4 @@
+__type__ = "object"
+__class__ = "Car"
+brand = "BMW"
+model = "X6"
