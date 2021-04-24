@@ -1,0 +1,1 @@
+{"__type__": "function", "name": "division", "args": ["num1", "num2", "result"], "code": "def division(num1, num2):\n    result = num1 / num2\n    return result\n"}

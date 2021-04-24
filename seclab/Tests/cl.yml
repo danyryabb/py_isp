@@ -1,0 +1,9 @@
+__class__: Car
+__init__:
+  __type__: function
+  args:
+  - self
+  - brand
+  - model
+  name: __init__
+__type__: class
