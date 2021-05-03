@@ -1,14 +1,14 @@
 __type__ = "class"
 __class__ = "Car"
-greetings = "<function Car.greetings at 0x7fd97608df70>"
+greetings = "<function Car.greetings at 0x7f833d88cf70>"
 
 [__init__.code]
 co_argcount = 3
 co_cellvars = []
 co_code = [ 124, 1, 124, 0, 95, 0, 124, 2, 124, 0, 95, 1, 100, 0, 83, 0,]
 co_consts = [ "None",]
-co_filename = "/Users/a1/Desktop/2lab/MyParser/data.py"
-co_firstlineno = 20
+co_filename = "/Users/a1/Desktop/py_isp/2lab/MyParser/data.py"
+co_firstlineno = 19
 co_flags = 67
 co_freevars = []
 co_kwonlyargcount = 0
@@ -24,6 +24,6 @@ co_varnames = [ "self", "brand", "model",]
 __init__ = "__init__<function>"
 __name__ = "MyParser.data"
 __package__ = "MyParser"
-__file__ = "/Users/a1/Desktop/2lab/MyParser/data.py"
-__cached__ = "/Users/a1/Desktop/2lab/MyParser/__pycache__/data.cpython-39.pyc"
+__file__ = "/Users/a1/Desktop/py_isp/2lab/MyParser/data.py"
+__cached__ = "/Users/a1/Desktop/py_isp/2lab/MyParser/__pycache__/data.cpython-39.pyc"
 a = 5

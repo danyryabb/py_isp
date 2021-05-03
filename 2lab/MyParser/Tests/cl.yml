@@ -22,8 +22,8 @@ __init__:
     - 0
     co_consts: !!python/tuple
     - null
-    co_filename: /Users/a1/Desktop/2lab/MyParser/data.py
-    co_firstlineno: 20
+    co_filename: /Users/a1/Desktop/py_isp/2lab/MyParser/data.py
+    co_firstlineno: 19
     co_flags: 67
     co_freevars: !!python/tuple []
     co_kwonlyargcount: 0
@@ -44,9 +44,9 @@ __init__:
     - brand
     - model
   globals:
-    __cached__: /Users/a1/Desktop/2lab/MyParser/__pycache__/data.cpython-39.pyc
+    __cached__: /Users/a1/Desktop/py_isp/2lab/MyParser/__pycache__/data.cpython-39.pyc
     __doc__: null
-    __file__: /Users/a1/Desktop/2lab/MyParser/data.py
+    __file__: /Users/a1/Desktop/py_isp/2lab/MyParser/data.py
     __init__: __init__<function>
     __name__: MyParser.data
     __package__: MyParser

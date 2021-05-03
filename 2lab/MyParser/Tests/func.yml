@@ -16,7 +16,7 @@ code:
   - 0
   co_consts: !!python/tuple
   - null
-  co_filename: /Users/a1/Desktop/2lab/MyParser/data.py
+  co_filename: /Users/a1/Desktop/py_isp/2lab/MyParser/data.py
   co_firstlineno: 4
   co_flags: 67
   co_freevars: !!python/tuple []
@@ -36,9 +36,9 @@ code:
   - num1
   - result
 globals:
-  __cached__: /Users/a1/Desktop/2lab/MyParser/__pycache__/data.cpython-39.pyc
+  __cached__: /Users/a1/Desktop/py_isp/2lab/MyParser/__pycache__/data.cpython-39.pyc
   __doc__: null
-  __file__: /Users/a1/Desktop/2lab/MyParser/data.py
+  __file__: /Users/a1/Desktop/py_isp/2lab/MyParser/data.py
   __name__: MyParser.data
   __package__: MyParser
   a: 5
