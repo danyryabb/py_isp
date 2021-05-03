@@ -1,0 +1,3 @@
+[console_scripts]
+MyParser = MyParser.main:start_app
+

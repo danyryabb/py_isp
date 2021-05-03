@@ -1,0 +1,25 @@
+[code]
+co_argcount = 1
+co_cellvars = []
+co_code = [ 124, 0, 116, 0, 27, 0, 125, 1, 124, 1, 83, 0,]
+co_consts = [ "None",]
+co_filename = "/Users/a1/Desktop/2lab/MyParser/data.py"
+co_firstlineno = 4
+co_flags = 67
+co_freevars = []
+co_kwonlyargcount = 0
+co_lnotab = [ 0, 1, 8, 1,]
+co_name = "division"
+co_names = [ "a",]
+co_nlocals = 2
+co_posonlyargcount = 0
+co_stacksize = 2
+co_varnames = [ "num1", "result",]
+
+[globals]
+division = "division<function>"
+__name__ = "MyParser.data"
+__package__ = "MyParser"
+__file__ = "/Users/a1/Desktop/2lab/MyParser/data.py"
+__cached__ = "/Users/a1/Desktop/2lab/MyParser/__pycache__/data.cpython-39.pyc"
+a = 5

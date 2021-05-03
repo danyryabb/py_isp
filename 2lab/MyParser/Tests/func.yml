@@ -1,0 +1,45 @@
+code:
+  co_argcount: 1
+  co_cellvars: !!python/tuple []
+  co_code:
+  - 124
+  - 0
+  - 116
+  - 0
+  - 27
+  - 0
+  - 125
+  - 1
+  - 124
+  - 1
+  - 83
+  - 0
+  co_consts: !!python/tuple
+  - null
+  co_filename: /Users/a1/Desktop/2lab/MyParser/data.py
+  co_firstlineno: 4
+  co_flags: 67
+  co_freevars: !!python/tuple []
+  co_kwonlyargcount: 0
+  co_lnotab:
+  - 0
+  - 1
+  - 8
+  - 1
+  co_name: division
+  co_names: !!python/tuple
+  - a
+  co_nlocals: 2
+  co_posonlyargcount: 0
+  co_stacksize: 2
+  co_varnames: !!python/tuple
+  - num1
+  - result
+globals:
+  __cached__: /Users/a1/Desktop/2lab/MyParser/__pycache__/data.cpython-39.pyc
+  __doc__: null
+  __file__: /Users/a1/Desktop/2lab/MyParser/data.py
+  __name__: MyParser.data
+  __package__: MyParser
+  a: 5
+  division: division<function>
