@@ -5,8 +5,8 @@ from data import Car, division, add_one
 if __name__ == '__main__':
     # obj = Car
     # obj = division
-    # obj = add_one
-    obj = Car("LADA", "2106")
+    obj = add_one
+    # obj = Car("LADA", "2106")
     my_serializer = choose_p.Serializer
     while True:
         print("1 - JSON \n"

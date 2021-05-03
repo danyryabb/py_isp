@@ -92,11 +92,6 @@ class TestParsers(unittest.TestCase):
         obj_to_compare = my_p.unpack(self.pickle_parser.load(self.pickle_parser, './Tests/lamb.pickle'))
         self.assertEqual(obj_to_compare(2), 3)
 
-    def test_toml_lambda_dump_load(self):
-        self.toml_parser.dump(self.toml_parser, './Tests/lamb.toml', my_p.pack(self.lamb))
-        obj_to_compare = my_p.unpack(self.toml_parser.load(self.toml_parser, './Tests/lamb.toml'))
-        self.assertEqual(obj_to_compare(2), 3)
-
     def test_yaml_lambda_dump_load(self):
         self.yaml_parser.dump(self.yaml_parser, './Tests/lamb.yml', my_p.pack(self.lamb))
         obj_to_compare = my_p.unpack(self.yaml_parser.load(self.yaml_parser, './Tests/lamb.yml'))
@@ -204,11 +199,11 @@ class TestParsers(unittest.TestCase):
         from_yaml_to_compare = my_p.unpack(self.yaml_parser.load(self.yaml_parser, './Tests/lamb.yml'))
         self.assertEqual(from_json_to_compare(2), from_yaml_to_compare(2))
 
-    def test_toml_yaml_lambda_dump_load(self):
+    def test_yaml_toml_lambda_dump_load(self):
         self.yaml_parser.dump(self.yaml_parser, './Tests/lamb.yml', my_p.pack(self.lamb))
         from_yaml_to_compare = my_p.unpack(self.yaml_parser.load(self.yaml_parser, './Tests/lamb.yml'))
-        self.toml_parser.dump(self.toml_parser, './Tests/lamb.toml', my_p.pack(self.lamb))
-        from_toml_to_compare = my_p.unpack(self.toml_parser.load(self.toml_parser, './Tests/lamb.toml'))
+        self.json_parser.dump(self.json_parser, './Tests/lamb.toml', my_p.pack(self.lamb))
+        from_toml_to_compare = my_p.unpack(self.json_parser.load(self.json_parser, './Tests/lamb.toml'))
         self.assertEqual(from_yaml_to_compare(2), from_toml_to_compare(2))
 
     def test_yaml_pickle_lambda_dump_load(self):

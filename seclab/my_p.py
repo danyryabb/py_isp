@@ -1,7 +1,8 @@
 from abc import abstractmethod
-from types import FunctionType
+from types import CodeType, FunctionType
 import dill
 import inspect
+import builtins
 from data import Car
 
 
@@ -9,29 +10,50 @@ def is_primitive(obj):
     return type(obj) in [int, float, str, bool, type(None), list, tuple]
 
 
-def function_to_dictionary(func):
-    struct = {'__type__': 'function'}
-    args = []
-    if str(func).__contains__('lambda'):
-        lambda_string = str(dill.source.getsource(func)[dill.source.getsource(func).find("lambda"):])
-        struct['code'] = lambda_string
-        return struct
-    elif func.__name__.startswith('__'):
-        struct['name'] = func.__name__
-        for arg in func.__code__.co_varnames:
-            args.append(arg)
-        struct['args'] = args
-    else:
-        struct['name'] = func.__name__
-        for arg in func.__code__.co_varnames:
-            if arg == "class_name":
-                break
-            args.append(arg)
-        struct['args'] = args
-        string = str(dill.source.getsource(func))
-        string = string[string.find("def"):]
-        struct['code'] = string
-    return struct
+def function_to_dictionary(obj):
+    members = inspect.getmembers(obj.__code__)
+    func_dict = {}
+    for item in members:
+        if item[0].startswith('co_'):
+            func_dict[item[0]] = item[1]
+    func_dict['co_code'] = list(func_dict["co_code"])
+    func_dict['co_lnotab'] = list(func_dict["co_lnotab"])
+    func = {'code': func_dict}
+    function_globals = dict()
+    name = func['code']['co_name']
+    function_globals[name] = name + '<function>'
+    global_pairs = obj.__globals__.items()
+    for (key, value) in global_pairs:
+        if is_primitive(value):
+            function_globals[key] = value
+    func['globals'] = function_globals
+    return func
+
+
+def convert_to_function(dict_func):
+    function_globals = dict_func['globals']
+    function_globals['__builtins__'] = builtins
+    code_args = dict_func['code']
+    my_obj = CodeType(code_args['co_argcount'],
+                   code_args['co_posonlyargcount'],
+                   code_args['co_kwonlyargcount'],
+                   code_args['co_nlocals'],
+                   code_args['co_stacksize'],
+                   code_args['co_flags'],
+                   bytes(code_args['co_code']),
+                   tuple(code_args['co_consts']),
+                   tuple(code_args['co_names']),
+                   tuple(code_args['co_varnames']),
+                   code_args['co_filename'],
+                   code_args['co_name'],
+                   code_args['co_firstlineno'],
+                   bytes(code_args['co_lnotab']),
+                   tuple(code_args['co_freevars']),
+                   tuple(code_args['co_cellvars']))
+    temp = FunctionType(my_obj, function_globals, code_args['co_name'])
+    name = code_args['co_name']
+    function_globals[name] = temp
+    return FunctionType(my_obj, function_globals, name)
 
 
 def object_to_dictionary(obj):
@@ -70,17 +92,6 @@ def class_to_dictionary(cl):
         return struct
 
 
-def convert_to_function(json_str):
-    json_str['code'] = json_str['code'].strip()
-    foo_code = compile(json_str['code'], 'string', "exec")
-    if json_str.get('name'):
-        foo_name = FunctionType(foo_code.co_consts[0], globals(), json_str['name'])
-        return foo_name
-    else:
-        foo_lambda = FunctionType(foo_code.co_consts[0], globals(), 'lambda')
-        return foo_lambda
-
-
 def convert_to_object(json_str):
     class_name = globals()[json_str['__class__']]
     init_args = inspect.getfullargspec(class_name).args
@@ -103,6 +114,7 @@ def convert_to_object(json_str):
 def convert_to_class(json_str):
     vars = {}
     argsN = []
+    print(json_str)
 
     def attr_init(self, *args):
         if len(args) > len(argsN):
@@ -114,7 +126,7 @@ def convert_to_class(json_str):
 
     for attr in json_str:
         if attr == '__init__':
-            for arg in json_str[attr]['args']:
+            for arg in json_str[attr]['code']['co_varnames']:
                 if arg != 'self':
                     argsN.append(arg)
             vars[attr] = attr_init
