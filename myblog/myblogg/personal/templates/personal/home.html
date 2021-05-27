@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="border: 2px solid #000;">
+    <h1>this is the body</h1>
+    <p>here is where u put staff that should be in the body</p>
+
+    {% for item in list_of_values %}
+        {% include 'personal/snippets/body_snippet.html' with value=item %}
+<!--        {{item}}<br>-->
+    {% endfor %}
+<!--    snippets usage -> reusing code-->
+</div>
+
+{% endblock content %}
