@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
     # my apps
     'personal',
+    'useraccount',
 
     # django apps
     'django.contrib.admin',
@@ -71,6 +72,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'useraccount.Account'
 
 WSGI_APPLICATION = 'myblogg.wsgi.application'
 
