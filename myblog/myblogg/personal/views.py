@@ -11,5 +11,5 @@ def home_screen_view(request):
     # context['list_of_values'] = list_of_values
 
     accounts = Account.objects.all()
-    context['users'] = accounts
+    context['accounts'] = accounts
     return render(request, "personal/home.html", context)

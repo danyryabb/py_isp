@@ -3,30 +3,27 @@
 
 <head>
     <title>title</title>
-    {% if request.user.is_authenticated %}
-        <p>
-            <a href="{% url 'home' %}">Home</a> |
-            <a href="{% url 'logout' %}">logout</a>
-        </p>
-        <p>hello, {{request.user.username}}</p>
-    {% else %}
-        <p>
-            <a href="{% url 'home' %}">Home</a> |
-            <a href="{% url 'register' %}">register</a> |
-            <a href="{% url 'login' %}">login</a>
-        </p>
-    {% endif %}
-    <hr>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% include 'snippets/header.html' %}
 </head>
 
 <body>
-{% block content %}
-{% endblock content %}
-</body>
+    <!--body-->
+    <style type="text/css">
+        .main{
+            min-height: 100vh;
+            height: 100%;
+        }
+    </style>
+    <div class="main">
+        {% block content %}
+        {% endblock content %}
+    </div>
 
-<footer>
-    <hr>
-    <h2>dany's footer view</h2>
-</footer>
+    <!--end body-->
+    {% include 'snippets/footer.html' %}
+</body>
 
 </html>

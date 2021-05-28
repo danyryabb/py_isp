@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">My Coffee-lover Blog</h1>
+        <p class="lead">Hey :)</p>
+    </div>
 
-<div style="border: 2px solid #000;">
-    <h1>this is the body</h1>
-    <p>here is where u put staff that should be in the body</p>
-
-    {% for item in accounts %}
-        <p>{{item}}</p>
-    {% endfor %}
-</div>
+    <div class="container">
+        <div class="d-flex flex-column">
+             <h4>registered users:</h4>
+            {% for item in accounts %}
+                <p>{{item}}</p>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock content %}
