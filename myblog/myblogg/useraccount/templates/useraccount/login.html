@@ -1,5 +1,5 @@
 {% extends 'useraccount/base.html' %}
-
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block head %}
@@ -9,6 +9,9 @@
 
 {% block main %}
     <div class="card">
+        <div class="d-flex flex-column pb3">
+            <img class="img-fluid mx-auto d-block " src="{% static 'coffee_favicon.jpg' %}" width="70" height="70">
+        </div>
         <div class="card-body">
             <h4 align="center" class="card-title">Log in to your account</h4>
             <form method="post">

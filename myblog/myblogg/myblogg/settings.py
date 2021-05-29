@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     # my apps
     'personal',
     'useraccount',
+    'article',
 
     # django apps
     'django.contrib.admin',
@@ -129,10 +130,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# MEDIA_URL = '/media/'
-
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = [BASE_DIR / 'media_cdn']  # media_cdn even when we are in dev mod else amazon
+STATIC_ROOT = BASE_DIR / 'static_cdn'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    BASE_DIR / 'media',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
