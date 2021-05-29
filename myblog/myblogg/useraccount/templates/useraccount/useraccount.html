@@ -26,13 +26,15 @@
             </button>
         </form>
 
+        <form action="{% url 'account' %}" method="post" class="form-control">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {{ delete_form|crispy }}
+            <button type="submit" class="btn btn-primary btn-block">Delete account</button>
+        </form>
+
+        <a class="m-auto" href="{% url 'password_change' %}">Change password</a>
         <a href="{% url 'home' %}" class="btn btn-primary">Main page</a>
     </div>
 
-    <form action="{% url 'account' %}" method="post" class="form-control">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        {{ delete_form|crispy }}
-        <button type="submit" class="btn btn-primary btn-block">Delete account</button>
-    </form>
 {% endblock %}

@@ -14,7 +14,9 @@
     }
 
     .pricing-header {
-        max-width: 700px;
+        width: 100vw;
+        background: #fc0;
+        background-color: purple;
     }
 
     .card-deck .card {
@@ -22,7 +24,8 @@
     }
 </style>
 <!--header-->
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
+     style="color: purple;">
     <h5 class="my-0 mr-md-auto font-weight-normal">
         {% if request.user.is_authenticated %}
         <p>hello, {{request.user.username}}</p>

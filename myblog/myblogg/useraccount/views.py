@@ -44,6 +44,7 @@ def login_view(request):
 
 
 def account_view(request):
+    context = {}
     if request.POST:
         delete_form = DeleteAccountForm(data=request.POST)
         if delete_form.is_valid():
@@ -51,7 +52,9 @@ def account_view(request):
             if user[0].email == request.user.email:
                 user.delete()
                 return redirect(reverse('home'))
-        return render(request, 'useraccount/useraccount.html', {'delete_form': delete_form, 'user': request.user})
+        context['delete_form'] = delete_form
+        context['user'] = request.user
+        return render(request, 'useraccount/useraccount.html', context)
     else:
         delete_form = DeleteAccountForm
         form = UserInfoForm(
@@ -66,8 +69,11 @@ def account_view(request):
         form.set_placeholders()
         user = request.user
         picture_form = UpdatePictureForm
-        return render(request, 'useraccount/useraccount.html',
-                      {'delete_form': delete_form, 'user': user, 'form': form, 'picture_form': picture_form})
+        context['delete_form'] = delete_form
+        context['user'] = request.user
+        context['form'] = form
+        context['picture_form'] = picture_form
+        return render(request, 'useraccount/useraccount.html', context)
 
 
 def change_avatar(request):
