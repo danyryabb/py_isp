@@ -1,34 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'useraccount/base.html' %}
 
-{% block content %}
+{% load crispy_forms_tags %}
 
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {% for field in login_form %}
-        <p>
-            {{field.label_tag}}
-            {{field}}
+{% block head %}
+    <title>Login</title>
+{% endblock %}
 
-            {% if field.help_text %}
-                <small style="color: grey;">{{field.help_text}}</small>
-            {% endif %}
-        </p>
-    {% endfor %}
 
-    {% for field in login_form %}
-        {% for error in field.errors %}
-            <p style="color: red;">{{error}}</p>
-        {% endfor %}
-    {% endfor %}
-
-    {% if login_form.non_field_errors %}
-        <div style="color:red;">
-            <p>{{login_form.non_field_errors}}</p>
+{% block main %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Log in to your account</h4>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            </form>
         </div>
-    {% endif %}
+    </div>
 
-    <button type="submit">Login</button>
-</form>
 
-{% endblock content %}
+
+
+{% endblock %}

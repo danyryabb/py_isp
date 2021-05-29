@@ -1,34 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'useraccount/base.html' %}
+{% load crispy_forms_tags %}
+{% block main %}
 
-{% block content %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top"
+                {% if user.picture %}
+             src="{{ user.picture.url }}"
+                {% else %}
+             src="/static/images/231076-1908_FPT_202680_base.jpg"
+                {% endif %}
+             alt="Card image cap">
 
-<h2>Account</h2>
-<form method="post">
-    {% csrf_token %}
-    {% for field in account_form %}
-        <p>
-            {{field.label_tag}}
-            {{field}}
+        <form action="{% url 'upload_picture' %}" method="post" class="form-control" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="picture">
+            <button type="submit" class="btn btn-primary">Upload profile avatar</button>
+        </form>
 
-            {% if field.help_text %}
-                <small style="color: grey;">{{field.help_text}}</small>
-            {% endif %}
-        </p>
-    {% endfor %}
 
-    {% for field in account_form %}
-        {% for error in field.errors %}
-            <p style="color: red;">{{error}}</p>
-        {% endfor %}
-    {% endfor %}
+        <form action="{% url 'save_changes' %}" method="post" class="form-control">
+            {{ form }}
+            {% csrf_token %}
+            <button type="submit" name="user_id" class="btn btn-primary btn-block" value={{ user.id }}>
+                Save changes
+            </button>
+        </form>
 
-    {% if account_form.non_field_errors %}
-        <div style="color:red;">
-            <p>{{account_form.non_field_errors}}</p>
-        </div>
-    {% endif %}
+        <a href="{% url 'home' %}" class="btn btn-primary">Main page</a>
+    </div>
 
-    <button type="submit">save changes</button>
-</form>
-
-{% endblock content %}
+    <form action="{% url 'account' %}" method="post" class="form-control">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {{ delete_form|crispy }}
+        <button type="submit" class="btn btn-primary btn-block">Delete account</button>
+    </form>
+{% endblock %}

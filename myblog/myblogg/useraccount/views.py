@@ -1,25 +1,26 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
-from useraccount.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect, reverse
+from .forms import CustomUserCreationForm, DeleteAccountForm, UserInfoForm, UpdatePictureForm
+
+User = get_user_model()
 
 
 def registration_view(request):
     context = {}
     if request.POST:
-        form = RegistrationForm(request.POST)
+        form = CustomUserCreationForm(data=request.POST)
         if form.is_valid():
             user = form.save()
-            # email = form.cleaned_data.get('email')
-            # raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(email=email, password=raw_password)
             login(request, user)
-
             return redirect('home')
         else:
-            context['registration_form'] = form
-    else: # get req
-        form = RegistrationForm()
-        context['registration_form'] = form
+            form = CustomUserCreationForm
+            context['form'] = form
+    else:
+        form = CustomUserCreationForm
+        context['form'] = form
     return render(request, 'useraccount/register.html', context)
 
 
@@ -30,39 +31,75 @@ def logout_view(request):
 
 def login_view(request):
     context = {}
-    user = request.user
-    if user.is_authenticated:
-        return redirect('home')
-
     if request.POST:
-        form = AccountAuthenticationForm(request.POST)
+        form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            email = request.POST['email']
-            password = request.POST['password']
-            user = authenticate(email=email, password=password)
-            if user:
-                login(request, user)
-                return redirect('home')
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
     else:
-        form = AccountAuthenticationForm()
-    context['login_form'] = form
+        form = AuthenticationForm
+    context['form'] = form
     return render(request, 'useraccount/login.html', context)
 
 
 def account_view(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
-    context = {}
     if request.POST:
-        form = AccountUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
+        delete_form = DeleteAccountForm(data=request.POST)
+        if delete_form.is_valid():
+            user = User.objects.filter(email=delete_form.clean_email())
+            if user[0].email == request.user.email:
+                user.delete()
+                return redirect(reverse('home'))
+        return render(request, 'useraccount/useraccount.html', {'delete_form': delete_form, 'user': request.user})
     else:
-        form = AccountUpdateForm(
-            initial = {
-                "email": request.user.email,
-                "username": request.user.username,
+        delete_form = DeleteAccountForm
+        form = UserInfoForm(
+            initial={
+                'username': request.user.username,
+                'email': request.user.email,
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name
             }
         )
-    context['account_form'] = form
-    return render(request, 'useraccount/useraccount.html', context)
+
+        form.set_placeholders()
+        user = request.user
+        picture_form = UpdatePictureForm
+        return render(request, 'useraccount/useraccount.html',
+                      {'delete_form': delete_form, 'user': user, 'form': form, 'picture_form': picture_form})
+
+
+def change_avatar(request):
+    context = {}
+    if request.POST:
+        user = User.objects.get(id=request.user.id)
+        update_picture_form = UpdatePictureForm(data=request.POST, files=request.FILES)
+        if update_picture_form.is_valid():
+            picture = request.FILES['picture']
+            print(picture.size)
+            print(picture.name)
+            user.picture = picture
+            print(user.picture)
+            user.save()
+    context['user'] = request.user
+    return redirect(reverse('useraccount'), 'useraccount/useraccount.html', context)
+
+
+def save_changes(request):
+    context = {}
+    if request.POST:
+        user_info_form = UserInfoForm(data=request.POST)
+        if user_info_form.is_valid():
+            username = user_info_form.get_username(request)
+            email = user_info_form.get_email(request)
+            first_name = user_info_form.get_first_name()
+            last_name = user_info_form.get_last_name()
+            user = User.objects.get(id=request.user.id)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.username = username
+            user.email = email
+            user.save()
+    context['user'] = request.user
+    return redirect(reverse('account'), 'registration/account.html', context)

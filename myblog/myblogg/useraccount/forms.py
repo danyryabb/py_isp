@@ -1,51 +1,113 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
-from useraccount.models import Account
+from django.contrib.auth import get_user_model, authenticate
+User = get_user_model()
 
-
-class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(max_length=60, help_text='Add a valid email address')
-
-    class Meta:
-        model = Account
-        fields = ('email', 'username', 'password1', 'password2')
-
-
-class AccountAuthenticationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
-
-    def clean(self):
-        if self.is_valid():
-            email = self.cleaned_data['email']
-            password = self.cleaned_data['password']
-            if not authenticate(email=email, password=password):
-                raise forms.ValidationError("Invalid login")
-
-    class Meta:
-        model = Account
-        fields = ('email', 'password')
-
-
-class AccountUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = ('email', 'username')
-
-    def clean_email(self):
-        if self.is_valid():
-            email = self.cleaned_data['email']
-            try:
-                account = Account.objects.exclude(pk=self.instance.pk).get(email=email)
-            except Account.DoesNotExist:
-                return email
-            raise forms.ValidationError('Email "%s" is already in use.' % account)
+class CustomUserCreationForm(forms.Form):
+    email = forms.EmailField(label='Enter Email', min_length=4, max_length=150)
+    username = forms.CharField(label='Enter Username')
+    password1 = forms.CharField(label='Enter password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
 
     def clean_username(self):
-        if self.is_valid():
-            username = self.cleaned_data['username']
-            try:
-                account = Account.objects.exclude(pk=self.instance.pk).get(username=username)
-            except Account.DoesNotExist:
-                return username
-            raise forms.ValidationError('Username "%s" is already in use.' % account.username)
+        username = self.cleaned_data['username'].lower()
+        r = User.objects.filter(username=username)
+        if r.count():
+            raise forms.ValidationError("Username already exists")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        r = User.objects.filter(email=email)
+        if r.count():
+            raise forms.ValidationError("Email already exists")
+        return email
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Password don't match")
+
+        return password2
+
+    def save(self):
+        user = User.objects.create_user(
+            self.cleaned_data['username'],
+            self.cleaned_data['email'],
+            self.cleaned_data['password1']
+        )
+        return user
+
+
+class DeleteAccountForm(forms.Form):
+    email = forms.CharField(label='Enter email')
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        r = User.objects.filter(email=email)
+        if r.count():
+            return email
+        raise forms.ValidationError("Email does not exist")
+
+
+class UserInfoForm(forms.Form):
+    username = forms.CharField(label='Enter Username', min_length=4, max_length=150, widget=forms.TextInput)
+    email = forms.EmailField(label='Enter email')
+    first_name = forms.CharField(label='Enter First Name', min_length=4, max_length=150, widget=forms.TextInput)
+    last_name = forms.CharField(label='Enter Last Name', min_length=4, max_length=150, widget=forms.TextInput)
+
+    def get_username(self, request):
+        username = self.cleaned_data['username'].lower()
+        r = list(User.objects.filter(username=username))
+        if len(r) == 1 and r[0].username != request.user.username:
+            raise forms.ValidationError("Username already exists")
+        return username
+
+    def get_email(self, request):
+        email = self.cleaned_data['email'].lower()
+        r = list(User.objects.filter(email=email))
+        if len(r) == 1 and r[0].email != request.user.email:
+            raise forms.ValidationError("Email already exists")
+        return email
+
+    def get_first_name(self):
+        first_name = self.cleaned_data['first_name'].lower()
+        return first_name
+
+    def get_last_name(self):
+        last_name = self.cleaned_data['last_name'].lower()
+        return last_name
+
+    def set_placeholders(self):
+        self.fields['username'].widget.attrs.update({'placeholder': 'Username'})
+        self.fields['email'].widget.attrs.update({'placeholder': 'Email'})
+        self.fields['first_name'].widget.attrs.update({'placeholder': 'First name'})
+        self.fields['last_name'].widget.attrs.update({'placeholder': 'Last name'})
+
+
+class UpdatePictureForm(forms.Form):
+    picture = forms.ImageField(label='Select a picture')
+
+# class AccountUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ('email', 'username')
+#
+#     def clean_email(self):
+#         if self.is_valid():
+#             email = self.cleaned_data['email']
+#             try:
+#                 account = User.objects.exclude(pk=self.instance.pk).get(email=email)
+#             except User.DoesNotExist:
+#                 return email
+#             raise forms.ValidationError('Email "%s" is already in use.' % account)
+#
+#     def clean_username(self):
+#         if self.is_valid():
+#             username = self.cleaned_data['username']
+#             try:
+#                 account = User.objects.exclude(pk=self.instance.pk).get(username=username)
+#             except User.DoesNotExist:
+#                 return username
+#             raise forms.ValidationError('Username "%s" is already in use.' % account.username)
