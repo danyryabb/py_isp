@@ -131,11 +131,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = [BASE_DIR / 'media_cdn']  # media_cdn even when we are in dev mod else amazon
+MEDIA_ROOT = BASE_DIR / 'media_cdn'  # media_cdn even when we are in dev mod else amazon
 STATIC_ROOT = BASE_DIR / 'static_cdn'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-    BASE_DIR / 'media',
+    BASE_DIR / 'media'
 ]
 
 # Default primary key field type

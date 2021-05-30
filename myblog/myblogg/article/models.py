@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 def upload_location(instance, filename):
-	file_path = 'blog/{author_id}/{title}-{filename}'.format(
+	file_path = 'article/{author_id}/{title}-{filename}'.format(
 		author_id=str(instance.author.id),
         title=str(instance.title),
         filename=filename

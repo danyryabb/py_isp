@@ -23,8 +23,7 @@ from django.urls import path, include, re_path
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^', include('personal.urls')),
-    # re_path(r'menu/', include('menu.urls')),
-    # re_path(r'post/', include('article.urls')),
+    re_path(r'post/', include('article.urls')),
     path('account/', include('useraccount.urls')),
     path('account/', include('django.contrib.auth.urls')),
 ]

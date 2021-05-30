@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, reverse
 from .forms import CustomUserCreationForm, DeleteAccountForm, UserInfoForm, UpdatePictureForm
-
+from article.models import BlogPost
 User = get_user_model()
 
 
@@ -52,6 +52,9 @@ def account_view(request):
             if user[0].email == request.user.email:
                 user.delete()
                 return redirect(reverse('home'))
+
+        blog_posts = BlogPost.objects.filter(author=request.user)
+        context['blog_posts'] = blog_posts
         context['delete_form'] = delete_form
         context['user'] = request.user
         return render(request, 'useraccount/useraccount.html', context)
@@ -109,3 +112,7 @@ def save_changes(request):
             user.save()
     context['user'] = request.user
     return redirect(reverse('account'), 'registration/account.html', context)
+
+
+def must_authenticate_view(request):
+    return render(request, 'useraccount/must_authenticate.html', {})

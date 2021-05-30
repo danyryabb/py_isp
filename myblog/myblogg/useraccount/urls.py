@@ -10,5 +10,6 @@ urlpatterns = [
     re_path(r'^avatar/$', change_avatar, name='avatar'),
     re_path(r'^save-changes/$', save_changes, name='save_changes'),
     re_path(r'^upload-picture/$', change_avatar, name='upload_picture'),
+    re_path(r'^must_authenticate/$', must_authenticate_view, name='must_authenticate'),
     path('', include('django.contrib.auth.urls'))
 ]
