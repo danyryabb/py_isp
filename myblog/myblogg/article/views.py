@@ -7,36 +7,7 @@ from .models import BlogPost, Comment
 from django.db.models import Q
 from django.http import HttpResponse
 from useraccount.models import Account
-
-
-class CreateBlogPostForm(forms.ModelForm):
-	class Meta:
-		model = BlogPost
-		fields = ['title', 'body', 'image']
-
-
-class UpdateBlogPostForm(forms.ModelForm):
-	class Meta:
-		model = BlogPost
-		fields = ['title', 'body', 'image']
-
-	def save(self, commit=True):
-		blog_post = self.instance
-		blog_post.title = self.cleaned_data['title']
-		blog_post.body = self.cleaned_data['body']
-
-		if self.cleaned_data['image']:
-			blog_post.image = self.cleaned_data['image']
-
-		if commit:
-			blog_post.save()
-		return blog_post
-
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = {'content'}
+from .forms import UpdateBlogPostForm, CreateBlogPostForm, CommentForm
 
 
 def create_blog_view(request):
@@ -131,16 +102,16 @@ def get_blog_queryset(query=None):
 #     context['is_liked'] = is_liked
 #     context['current_user'] = User
 #     return render(self, 'article.html', context)
-#
-#
-# def like_post(request):
-#     context = {}
-#     post = get_object_or_404(BlogPost, id=request.POST.get('post_id'))
-#     if post.likes.filter(id=request.user.pk).exists():
-#         post.likes.remove(request.user)
-#         is_liked = False
-#     else:
-#         post.likes.add(request.user)
-#         is_liked = True
-#     context['is_liked'] = is_liked
-#     return HttpResponseRedirect(post.get_absolute_url(), context)
+
+
+def like_post(request):
+    context = {}
+    post = get_object_or_404(BlogPost, id=request.POST.get('post_id'))
+    if post.likes.filter(id=request.user.pk).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    context['is_liked'] = is_liked
+    return HttpResponseRedirect(post.get_absolute_url(), context)
