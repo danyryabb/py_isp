@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect, reverse
-from .models import BlogPost, Comment
+from .models import BlogPost  # Comment
 from django.db.models import Q
 from django.http import HttpResponse
 from useraccount.models import Account
-from .forms import UpdateBlogPostForm, CreateBlogPostForm, CommentForm
+from .forms import UpdateBlogPostForm, CreateBlogPostForm  # CommentForm
 
 
 def create_blog_view(request):
@@ -104,14 +104,14 @@ def get_blog_queryset(query=None):
 #     return render(self, 'article.html', context)
 
 
-def like_post(request):
-    context = {}
-    post = get_object_or_404(BlogPost, id=request.POST.get('post_id'))
-    if post.likes.filter(id=request.user.pk).exists():
-        post.likes.remove(request.user)
-        is_liked = False
-    else:
-        post.likes.add(request.user)
-        is_liked = True
-    context['is_liked'] = is_liked
-    return HttpResponseRedirect(post.get_absolute_url(), context)
+# def like_post(request):
+#     context = {}
+#     post = get_object_or_404(BlogPost, id=request.POST.get('post_id'))
+#     if post.likes.filter(id=request.user.pk).exists():
+#         post.likes.remove(request.user)
+#         is_liked = False
+#     else:
+#         post.likes.add(request.user)
+#         is_liked = True
+#     context['is_liked'] = is_liked
+#     return HttpResponseRedirect(post.get_absolute_url(), context)

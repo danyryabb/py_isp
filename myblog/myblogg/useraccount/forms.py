@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model, authenticate
 User = get_user_model()
 
+
 class CustomUserCreationForm(forms.Form):
     email = forms.EmailField(label='Enter Email', min_length=4, max_length=150)
     username = forms.CharField(label='Enter Username')
@@ -53,7 +54,7 @@ class DeleteAccountForm(forms.Form):
 
 class UserInfoForm(forms.Form):
     username = forms.CharField(label='Enter Username', min_length=4, max_length=150, widget=forms.TextInput)
-    email = forms.EmailField(label='Enter email')
+    email = forms.EmailField(label='Enter Email')
     first_name = forms.CharField(label='Enter First Name', min_length=4, max_length=150, widget=forms.TextInput)
     last_name = forms.CharField(label='Enter Last Name', min_length=4, max_length=150, widget=forms.TextInput)
 
@@ -88,26 +89,3 @@ class UserInfoForm(forms.Form):
 
 class UpdatePictureForm(forms.Form):
     picture = forms.ImageField(label='Select a picture')
-
-# class AccountUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('email', 'username')
-#
-#     def clean_email(self):
-#         if self.is_valid():
-#             email = self.cleaned_data['email']
-#             try:
-#                 account = User.objects.exclude(pk=self.instance.pk).get(email=email)
-#             except User.DoesNotExist:
-#                 return email
-#             raise forms.ValidationError('Email "%s" is already in use.' % account)
-#
-#     def clean_username(self):
-#         if self.is_valid():
-#             username = self.cleaned_data['username']
-#             try:
-#                 account = User.objects.exclude(pk=self.instance.pk).get(username=username)
-#             except User.DoesNotExist:
-#                 return username
-#             raise forms.ValidationError('Username "%s" is already in use.' % account.username)

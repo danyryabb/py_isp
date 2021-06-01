@@ -19,7 +19,7 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, password):
+    def create_superuser(self, username, email, password):
         user = self.create_user(
             email=self.normalize_email(email),
             password=password,
@@ -37,7 +37,7 @@ def user_directory_path(instance, filename):
 
 
 class Account(AbstractBaseUser):
-    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+    email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     picture = models.ImageField(null=True, blank=True, upload_to='')
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
@@ -59,6 +59,3 @@ class Account(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
-
-    def has_module_perms(self, app_label):
-        return True

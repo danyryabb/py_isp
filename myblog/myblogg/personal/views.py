@@ -4,7 +4,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from article.views import get_blog_queryset
 from article.models import BlogPost
 
-BLOG_POSTS_PER_PAGE = 10
+BLOG_POSTS_PER_PAGE = 5
 
 def home_screen_view(request, *args, **kwargs):
     context = {}
