@@ -56,6 +56,7 @@ def sync_search_view(request):
     return HttpResponse('sync')
 # total sync 2.0138511657714844
 
+
 def get_blog_queryset_sync():
     print('prepare to get all blogs - sync')
     time.sleep(2)
@@ -72,7 +73,6 @@ async def async_search_view(request):
     print('total async', total)
     return HttpResponse('async')
 # total async 0.030826807022094727
-
 
 
 @sync_to_async
