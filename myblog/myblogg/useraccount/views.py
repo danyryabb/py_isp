@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 from .forms import CustomUserCreationForm, DeleteAccountForm, UserInfoForm, UpdatePictureForm
 from article.models import BlogPost
@@ -21,11 +22,13 @@ def registration_view(request):
     else:
         form = CustomUserCreationForm
         context['form'] = form
+    messages.success(request, 'Successfully registered')
     return render(request, 'useraccount/register.html', context)
 
 
 def logout_view(request):
     logout(request)
+    messages.success(request, 'Logged out')
     return redirect('home')
 
 
@@ -91,6 +94,7 @@ def change_avatar(request):
             user.picture = picture
             print(user.picture)
             user.save()
+            messages.success(request, 'Done')
     context['user'] = request.user
     return redirect(reverse('useraccount'), 'useraccount/useraccount.html', context)
 
@@ -110,9 +114,11 @@ def save_changes(request):
             user.username = username
             user.email = email
             user.save()
+            messages.success(request, 'Done')
     context['user'] = request.user
     return redirect(reverse('account'), 'registration/account.html', context)
 
 
 def must_authenticate_view(request):
+    messages.error(request, 'You must be authenticated')
     return render(request, 'useraccount/must_authenticate.html', {})

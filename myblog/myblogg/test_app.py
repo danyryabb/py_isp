@@ -8,7 +8,7 @@ from useraccount.models import Account
 from useraccount.forms import CustomUserCreationForm, UpdatePictureForm, DeleteAccountForm, UserInfoForm
 from article.views import create_blog_view
 from article.forms import CreateBlogPostForm, UpdateBlogPostForm
-from useraccount.views import registration_view, login_view, account_view, must_authenticate_view
+from useraccount.views import registration_view, login_view, account_view, must_authenticate_view, change_avatar
 from personal.views import home_screen_view
 from unittest import mock
 from django.test import RequestFactory
@@ -51,13 +51,17 @@ def test_post_name_is_title():
     expected_object_name = BlogPost(title="title", body="body", image=get_image_file1, date_published="31/05/2021", author=acc).__str__()
     assert expected_object_name == 'title'
 
-def test_acc_manager_user():
-    test_user = User.objects.create_user('user22', 'user22@mail.ru', 'qwaszx12')
-    assert test_user.username == 'user22'
+
+def test_acc_manager_user_perms():
+    test_user = User.objects.create_user('user1221', 'user1221@mail.ru', 'qwaszx12')
+    assert test_user.username != 'user02'
+    assert test_user.has_perm(test_user.is_admin) == False
+
 
 def test_acc_manager_superuser():
-    test_user = User.objects.create_superuser('user21', 'user21@mail.ru', 'qwaszx12')
-    assert test_user.email == 'user21@mail.ru'
+    test_user = User.objects.create_superuser('user223', 'user223@mail.ru', 'qwaszx12')
+    assert test_user.email == 'user223@mail.ru'
+    assert test_user.has_perm(test_user.is_admin) == True
 
 def test_user_create_form():
     form = CustomUserCreationForm()
@@ -126,13 +130,6 @@ def test_response_from_base_view():
     response = home_screen_view(request)
     assert response.status_code == 200
 
-# def test_home_view_pag():
-#     factory = RequestFactory()
-#     request = factory.get('')
-#     request.user = acc
-#     response = home_screen_view(request)
-#     assert response == render(request, "personal/home.html", context)
-
 def test_response_from_create_blog_view():
     factory = RequestFactory()
     request = factory.get('/create/')
@@ -143,6 +140,9 @@ def test_response_from_create_blog_view():
 def test_response_from_must_auth_view():
     factory = RequestFactory()
     request = factory.get('/must_authenticate/')
+    setattr(request, 'session', 'session')
+    messages = FallbackStorage(request)
+    setattr(request, '_messages', messages)
     response = must_authenticate_view(request)
     assert response.status_code == 200
 
@@ -157,6 +157,9 @@ def test_response_from_registration_view():
     factory = RequestFactory()
     request = factory.get('/register/')
     request.user = acc
+    setattr(request, 'session', 'session')
+    messages = FallbackStorage(request)
+    setattr(request, '_messages', messages)
     response = registration_view(request)
     assert response.status_code == 200
 

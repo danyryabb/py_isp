@@ -1,5 +1,6 @@
 {% extends 'useraccount/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block main %}
 
 <style>
@@ -32,6 +33,11 @@
             <button type="submit" name="user_id" class="btn btn-primary btn-block" value={{ user.id }}>
                 Save changes
             </button>
+
+<!--            <div class="toast toast--visible toast--success ">Simple toast message</div>-->
+
+            Toast.show('Must be authenticate', 'error');
+            <script src="{% static 'js/toastr.js' %}"></script>
         </form>
 
         <form action="{% url 'account' %}" method="post" class="form-control">

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
+
 <style type="text/css">
 	@media (max-width: 768px) {
 		.right-column{
@@ -84,7 +84,14 @@
 					 width="70"
 					 height="70">
 				<p class="lead">Hey my boys and girls :))</p>
-				<p class="m-auto"><a class="btn btn-primary" href="{% url 'article:create' %}">Create post</a></p>
+				<p class="m-auto"><a class="btn btn-primary" href="{% url 'article:create' %}" id="add">Create post</a></p>
+
+<!--				<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>-->
+<!--				<script type="text/javascript">-->
+<!--					document.getElementById('add').addEventListener('click', function(){-->
+<!--						toastr.info('added')-->
+<!--					});-->
+<!--				</script>-->
 			</div>
 
 		</div>

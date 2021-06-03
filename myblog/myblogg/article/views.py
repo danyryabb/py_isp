@@ -3,11 +3,10 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect, reverse
-from .models import BlogPost  # Comment
-from django.db.models import Q
+from .models import BlogPost
 from django.http import HttpResponse
 from useraccount.models import Account
-from .forms import UpdateBlogPostForm, CreateBlogPostForm  # CommentForm
+from .forms import UpdateBlogPostForm, CreateBlogPostForm
 
 
 def create_blog_view(request):
@@ -60,48 +59,6 @@ def edit_blog_view(request, slug):
 
 	context['form'] = form
 	return render(request, 'article/edit_blog.html', context)
-
-
-def get_blog_queryset(query=None):
-	queryset = []
-	queries = query.split(" ")
-	for q in queries:
-		posts = BlogPost.objects.filter(
-				Q(title__icontains=q) |
-				Q(body__icontains=q)
-			).distinct()
-
-		for post in posts:
-			queryset.append(post)
-
-	return list(set(queryset))
-
-
-# def PostDetail(self, pk):
-#     context = {}
-#     post = BlogPost.objects.get(id=pk)
-#     comment = Comment.objects.filter(post_id=post.id)
-#     is_liked = False
-#     if post.likes.filter(id=self.user.pk).exists():
-#         is_liked = True
-#     if self.POST:
-#         form = CommentForm(self.POST)
-#         if form.is_valid():
-#             if self.user.is_authenticated:
-#                 content = self.POST.get('content')
-#                 comment = Comment.objects.create(post=post, user_id=self.user.pk, content=content)
-#                 comment.save()
-#                 return HttpResponseRedirect('/post/' + str(pk))
-#             else:
-#                 return redirect(reverse('login'))
-#     else:
-#         form = CommentForm()
-#     context['form'] = form
-#     context['post'] = post
-#     context['comment'] = comment
-#     context['is_liked'] = is_liked
-#     context['current_user'] = User
-#     return render(self, 'article.html', context)
 
 
 # def like_post(request):
