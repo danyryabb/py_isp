@@ -1,6 +1,7 @@
 - made 2 async funcs in /personal/views.py - simple objects search - ( ...:1337/async/ | ...:1337/sync/ + console time log (dev mode))
 - add nginx for static & media files
-- docker compose for dev or prod status of project
+- docker compose for dev or prod mode of project
 - rdany992/dockerhub - repo on Docker Hub - nginx, db, web apps
 - https://hub.docker.com/repository/docker/rdany992/dockerhub
 я старался:)
+сделать деплой на heroku не получилось, так как сервис он не дружит с docker compose, но можно при желании разделить проект и сделать просто деплой django проекта :)
