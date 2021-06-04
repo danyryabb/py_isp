@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qk-87&l&i$&bbzvg(=7sv6vy67z=#xab&po$qyr3-hyhdm$qh9'
-
+# SECRET_KEY = 'django-insecure-qk-87&l&i$&bbzvg(=7sv6vy67z=#xab&po$qyr3-hyhdm$qh9'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=0))
+ALLOWED_HOSTS = ['testserver', '127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
-ALLOWED_HOSTS = ['testserver', '127.0.0.1']
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -91,13 +93,13 @@ WSGI_APPLICATION = 'myblogg.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'blog_db',
-        'USER': 'danyryabb',
-        'PASSWORD': '123199123',
-        'HOST': 'localhost',
-        'PORT': 5432
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -139,7 +141,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media_cdn'  # media_cdn even when we are in dev mod else amazon
+MEDIA_ROOT = BASE_DIR / 'media_cdn'
 STATIC_ROOT = BASE_DIR / 'static_cdn'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',

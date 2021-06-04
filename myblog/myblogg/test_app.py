@@ -8,7 +8,7 @@ from useraccount.models import Account
 from useraccount.forms import CustomUserCreationForm, UpdatePictureForm, DeleteAccountForm, UserInfoForm
 from article.views import create_blog_view
 from article.forms import CreateBlogPostForm, UpdateBlogPostForm
-from useraccount.views import registration_view, login_view, account_view, must_authenticate_view, change_avatar
+from useraccount.views import registration_view, login_view, account_view, must_authenticate_view
 from personal.views import home_screen_view
 from unittest import mock
 from django.test import RequestFactory
