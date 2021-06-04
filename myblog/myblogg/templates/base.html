@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% include 'snippets/header.html' %}
+</head>
+
+<body>
+    <!--body-->
+    <style type="text/css">
+        .main{
+            min-height: 100vh;
+            height: 100%;
+        }
+    </style>
+    <div class="main">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    <!--end body-->
+    {% include 'snippets/footer.html' %}
+</body>
+
+</html>
