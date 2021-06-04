@@ -1,5 +1,7 @@
 - made 2 async funcs in /personal/views.py - simple objects search - ( ...:8000/async/ | ...:8000/sync/ + console time log (dev mode))
 - docker compose for dev/prod mode
+- nginx, gunicorn
+- postgreSQL
 - rdany992/dockerhub - repo on Docker Hub - nginx, db, web apps
 - https://hub.docker.com/repository/docker/rdany992/dockerhub
 я старался:)
