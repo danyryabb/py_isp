@@ -1,4 +1,4 @@
-made 2 async funcs in /personal/views.py - simple objects search - ( ...:8000/async/ | ...:8000/sync/ + console log )
-add nginx for static & media files
-docker compose for dev or prod status
-rdany992/dockerhub - repo on Docker Hub
+- made 2 async funcs in /personal/views.py - simple objects search - ( ...:8000/async/ | ...:8000/sync/ + console log )
+- add nginx for static & media files
+- docker compose for dev or prod status
+- rdany992/dockerhub - repo on Docker Hub - ngix, db, web
