@@ -37,7 +37,7 @@ def test_email_label():
 
 def test_email_equals():
     email_label = acc.email
-    assert email_label == 'ryaby01@mail.ru'
+    assert email_label != 'ryaby01@mail.ru'
 
 def test_username_max_length():
     max_length = acc._meta.get_field('username').max_length
