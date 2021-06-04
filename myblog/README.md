@@ -2,6 +2,7 @@
 - docker compose for dev/prod mode
 - nginx, gunicorn
 - postgreSQL
+- demo.mov - present project via video
 - rdany992/dockerhub - repo on Docker Hub - nginx, db, web apps
 - https://hub.docker.com/repository/docker/rdany992/dockerhub
 я старался:)
