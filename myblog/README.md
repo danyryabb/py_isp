@@ -2,4 +2,5 @@
 - add nginx for static & media files
 - docker compose for dev or prod status of project
 - rdany992/dockerhub - repo on Docker Hub - nginx, db, web apps
+- https://hub.docker.com/repository/docker/rdany992/dockerhub
 я старался:)
