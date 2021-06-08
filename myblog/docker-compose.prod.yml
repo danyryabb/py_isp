@@ -1,9 +1,7 @@
 version: '3.7'
 services:
   web:
-    build:
-      context: ./myblogg
-      dockerfile: Dockerfile.prod
+    image: rdany992/myblog_web
     command: gunicorn myblogg.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static_cdn
@@ -21,7 +19,7 @@ services:
     env_file:
       - ./.env.prod.db
   nginx:
-    build: ./nginx
+    image: rdany992/dockerhub:myblog_django_nginx
     volumes:
       - static_volume:/home/app/web/static_cdn
       - media_volume:/home/app/web/media_cdn
