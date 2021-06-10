@@ -1,2 +1,11 @@
+__pycache__
+.pytest_cache
+*.session
+*.sql
+*coverage*
 .idea
+dist
+sandbox
+trash
+cli
 .DS_Store
