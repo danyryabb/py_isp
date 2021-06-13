@@ -4,6 +4,8 @@ __pycache__
 *.sql
 *coverage*
 .idea
+*.egg
+*.egg-info
 dist
 sandbox
 trash
