@@ -10,4 +10,5 @@ dist
 sandbox
 trash
 cli
+myblog-env
 .DS_Store
