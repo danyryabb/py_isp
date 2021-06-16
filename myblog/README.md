@@ -1,4 +1,5 @@
 - new:
+- add CI via github actions
 - update docker-compose.prod.yml file - django project builds from docker images (all of them are public, check that file)
 - update entrypoint.prod - nowadays you need only to run  - docker-compose -f docker-compose.prod.yml up -d --build - from activated venv
 - if u have problems with accessing, run -> docker-compose down -> docker-compose down --remove-orphans -> docker-compose -f docker-compose.prod.yml up -d --build
